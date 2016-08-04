@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using DemoBlog.Extensions;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,6 +13,7 @@ namespace DemoBlog.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            Response.HttpContext.Session.Set<bool>("MaSession", true);
             return new string[] { "value1", "value2" };
         }
 
@@ -19,6 +21,7 @@ namespace DemoBlog.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
+            bool sessionValue = Response.HttpContext.Session.Get<bool>("MaSession");
             return "value";
         }
     }
