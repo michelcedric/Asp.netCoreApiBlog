@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DemoBlog.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -18,6 +15,13 @@ namespace DemoBlog
         {
             services.AddSession();
             services.AddMvc();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Values.TokenPolicy, policy => policy.Requirements.Add(new TokenRequirement()));
+            });
+
+            services.AddSingleton<IAuthorizationHandler, SecurityHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

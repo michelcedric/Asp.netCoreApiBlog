@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using DemoBlog.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using DemoBlog.Security;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,6 +13,7 @@ namespace DemoBlog.Controllers
     {
         // GET: api/values
         [HttpGet]
+        [Authorize(Policy = Values.TokenPolicy)]
         public IEnumerable<string> Get()
         {
             Response.HttpContext.Session.Set<bool>("MaSession", true);
